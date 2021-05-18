@@ -15,6 +15,22 @@ version = "1.0.1"
 dependencies {
    implementation 'mil.army.usace.hec:hec-core:6.0-SNAPSHOT'
    implementation 'mil.army.usace.hec:hec-lib:6.0-SNAPSHOT'
-   //implementation 'mil.army.usace.hec:hec-rma:6.0-SNAPSHOT'
+   implementation 'mil.army.usace.hec:hec-rma:6.0-SNAPSHOT'
+   implementation 'mil.army.usace.hec:hec-data:6.0-SNAPSHOT'
       
+}
+jar {
+  manifest {
+    attributes(
+      'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+      'Main-Class': 'cacfdas.model.DamgeFrame'
+    )
+  }
+}
+
+task runJar(type: JavaExec) {
+   classpath = files('build/libs/cacfdas-1.0.1.jar')
+   classpath += sourceSets.main.runtimeClasspath
+   main = 'cacfdas.model.DamgeFrame'
+   systemProperty "java.library.path", "lib"
 }
